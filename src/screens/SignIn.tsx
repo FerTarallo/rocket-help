@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Alert } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import { VStack, Heading, Icon, useTheme } from 'native-base';
 import { Envelope, Key } from 'phosphor-react-native'
 
@@ -8,13 +10,15 @@ import { Button } from '../components/Button';
 import Logo from '../assets/logo_primary.svg';
 
 export function SignIn(){
-    const [name, setName] = useState<String>('');
+    const [email, setEmail] = useState<String>('');
     const [password, setPassword] = useState<String>('');
 
     const { colors } = useTheme();
 
     function handleSignIn() {
-        console.log(name, password);
+        if(!email || !password) {
+            return Alert.alert('Entrar', 'Informe e-mail e senha');
+        }
     }
 
     return (
@@ -22,14 +26,14 @@ export function SignIn(){
             <Logo />
 
             <Heading color="gray.100" fontSize="xl" mt={20} mb={6}>
-                Acesse sua conta {name}
+                Acesse sua conta {email}
             </Heading>
 
             <Input 
                 mb={4}
                 placeholder="E-mail"
                 InputLeftElement={<Icon as={<Envelope color={colors.gray[300]} />} ml={4} />}
-                onChangeText={setName}
+                onChangeText={setEmail}
             />   
             <Input 
                 mb={8}
